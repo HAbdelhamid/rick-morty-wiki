@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { gql } from "@apollo/client";
-import client from "../apollo-client";
+import graphqlClient from "../gql/graphql-client";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,6 +31,7 @@ export default function Home({ characters }) {
         <div className={styles.grid}>
             {characters.map((characters) => (
               <div key={characters.code} className={styles.card}>
+                <Image  src={characters && characters.image} alt={characters.name} width={200} height={200} />
                 <h3>{characters.name}</h3>
                 <p>
                   status : {characters.status} <br /> 
@@ -45,7 +46,7 @@ export default function Home({ characters }) {
 }
 
 export async function getStaticProps() {
-  const { data } = await client.query({
+  const { data } = await graphqlClient.query({
     query: gql`
       query Characters {
         characters {
@@ -62,7 +63,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      characters: data.characters.results.slice(0, 8),
+      characters: data.characters.results.slice(0, 20),
     },
  };
 }
