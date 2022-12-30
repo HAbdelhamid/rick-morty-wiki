@@ -5,5 +5,7 @@ import graphqlClient from '../gql/graphql-client'
 
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <ApolloProvider client={graphqlClient}><Component {...pageProps} /></ApolloProvider> 
+  return <ApolloProvider client={graphqlClient}>
+    <Component {...pageProps} />
+  </ApolloProvider> 
 }
