@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import { gql, useQuery } from "@apollo/client";
-import graphqlClient from "../gql/graphql-client";
 import { useState } from "react";
+import { NextPage } from "next";
+import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,15 @@ export default function Home({}) {
 
   const characters = data.characters.results;
 
+  const StyledButton = styled.button`
+    padding: 0.5em;
+    margin: 0.5em;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 3px;
+  `;
+
   return (
     <div>
       <Head>
@@ -57,8 +67,8 @@ export default function Home({}) {
             className={styles.logo}
             src="/rm.svg"
             alt="rick and morty Logo"
-            width={300}
-            height={200}
+            width={350}
+            height={250}
             priority
           />
         </div>
@@ -69,20 +79,20 @@ export default function Home({}) {
             setSearch(e.target.value);
           }}
         />
-        <button
+        <StyledButton
           onClick={() => {
             refetch({ name: search });
           }}
         >
           search
-        </button>
-        <button
+        </StyledButton>
+        <StyledButton
           onClick={() => {
             setSearch("");
           }}
         >
           reset
-        </button>
+        </StyledButton>
 
         <div className={styles.grid}>
           {characters.map((character, index) => {
@@ -101,7 +111,7 @@ export default function Home({}) {
             );
           })}
         </div>
-        <button
+        <StyledButton
           onClick={async () => {
             const fetch = await fetchMore({
               variables: {
@@ -111,7 +121,7 @@ export default function Home({}) {
           }}
         >
           Load more
-        </button>
+        </StyledButton>
       </main>
     </div>
   );
