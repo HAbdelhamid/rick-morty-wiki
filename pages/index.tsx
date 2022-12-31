@@ -50,6 +50,7 @@ export default function Home({}) {
     color: black;
     border: none;
     border-radius: 3px;
+    cursor: pointer;
   `;
 
   return (
@@ -88,7 +89,7 @@ export default function Home({}) {
         </StyledButton>
         <StyledButton
           onClick={() => {
-            setSearch("");
+            refetch({ name: "" });
           }}
         >
           reset
