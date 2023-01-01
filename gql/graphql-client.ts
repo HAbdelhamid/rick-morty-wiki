@@ -1,4 +1,4 @@
-import {ApolloClient, InMemoryCache, gql} from '@apollo/client'
+import {ApolloClient, InMemoryCache} from '@apollo/client'
 
 const graphqlClient = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql',

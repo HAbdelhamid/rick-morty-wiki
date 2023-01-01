@@ -50,9 +50,9 @@
   margin: 1rem 1.2rem;
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
+  background: rgba(var(--card-rgb), 0.5);
+  border: 1px solid rgba(var(--card-border-rgb), 0.15);
 }
 
 .card span {

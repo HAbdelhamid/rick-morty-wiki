@@ -3,9 +3,8 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import { gql, useQuery } from "@apollo/client";
-import { useState } from "react";
-import { NextPage } from "next";
 import styled from "styled-components";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +20,8 @@ const CHARACTERS_QUERY = gql`
         name
         status
         species
+        type
+        gender
         image
       }
     }
@@ -43,15 +44,13 @@ export default function Home({}) {
 
   const characters = data.characters.results;
 
-  const StyledButton = styled.button`
-    padding: 0.5em;
-    margin: 0.5em;
-    background: white;
-    color: black;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  `;
+  // const checkType = async () => {
+  //   characters.gender ? (
+  //     <p>Type: {characters.type}</p>
+  //   ) : (
+  //     <p>No Type</p>
+  //   );
+  // }}
 
   return (
     <div>
@@ -73,27 +72,30 @@ export default function Home({}) {
             priority
           />
         </div>
-        <input
-          id="outlined-basic"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
-        <StyledButton
-          onClick={() => {
-            refetch({ name: search });
-          }}
-        >
-          search
-        </StyledButton>
-        <StyledButton
-          onClick={() => {
-            refetch({ name: "" });
-          }}
-        >
-          reset
-        </StyledButton>
+        <Container>
+          <StyledInput
+            placeholder="Search"
+            type="text"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+          <StyledButton
+            onClick={() => {
+              refetch({ name: search });
+              setSearch("");
+            }}
+          >
+            search
+          </StyledButton>
+          <StyledButton
+            onClick={() => {
+              refetch({ name: "" });
+            }}
+          >
+            reset
+          </StyledButton>
+        </Container>
 
         <div className={styles.grid}>
           {characters.map((character, index) => {
@@ -102,12 +104,18 @@ export default function Home({}) {
                 <Image
                   src={character.image}
                   alt={character.name}
-                  width={200}
-                  height={200}
+                  width={180}
+                  height={180}
                 />
                 <h3>{character.name}</h3>
-                <p>{character.species}</p>
-                <p>{character.status}</p>
+                <p>Status: {character.status}</p>
+                {character.type ? (
+                  <p>Type: {character.type}</p>
+                ) : (
+                  <p>Type: No Type</p>
+                )}
+                <p>Species: {character.species}</p>
+                <p>Gender: {character.gender}</p>
               </div>
             );
           })}
@@ -128,14 +136,38 @@ export default function Home({}) {
   );
 }
 
-export async function getServerSideProps() {
-  // const { data } = await graphqlClient.query({
-  //   query: CHARACTERS_QUERY
-  // });
+// export async function getServerSideProps() {
+//   // const { data } = await graphqlClient.query({
+//   //   query: CHARACTERS_QUERY
+//   // });
 
-  return {
-    props: {
-      // ssrData: data
-    },
-  };
-}
+//   return {
+//     props: {
+//       // ssrData: data
+//     },
+//   };
+// }
+
+//Styled-components CSS
+const Container = styled.div`
+  padding: 1em;
+  margin-bottom: 2em;
+  justify-content: center;
+`;
+const StyledButton = styled.button`
+  padding: 0.7em;
+  margin: 0.5em;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+`;
+const StyledInput = styled.input`
+  padding: 0.7em;
+  margin: 0.5em;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 15px;
+`;
