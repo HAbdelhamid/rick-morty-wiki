@@ -76,6 +76,7 @@ export default function Home({}) {
           <StyledInput
             placeholder="Search"
             type="text"
+            value={search}
             onChange={(e) => {
               setSearch(e.target.value);
             }}
@@ -83,7 +84,6 @@ export default function Home({}) {
           <StyledButton
             onClick={() => {
               refetch({ name: search });
-              setSearch("");
             }}
           >
             search
@@ -91,6 +91,7 @@ export default function Home({}) {
           <StyledButton
             onClick={() => {
               refetch({ name: "" });
+              setSearch("");
             }}
           >
             reset
