@@ -4,7 +4,7 @@ import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import { gql, useQuery } from "@apollo/client";
 import styled from "styled-components";
-import { useState } from "react";
+import { Key, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -98,27 +98,29 @@ export default function Home({}) {
         </Container>
 
         <div className={styles.grid}>
-          {characters.map((character, index) => {
-            return (
-              <div className={styles.card} key={index}>
-                <Image
-                  src={character.image}
-                  alt={character.name}
-                  width={180}
-                  height={180}
-                />
-                <h3>{character.name}</h3>
-                <p>Status: {character.status}</p>
-                {character.type ? (
-                  <p>Type: {character.type}</p>
-                ) : (
-                  <p>Type: No Type</p>
-                )}
-                <p>Species: {character.species}</p>
-                <p>Gender: {character.gender}</p>
-              </div>
-            );
-          })}
+          {characters.map(
+            (character: typeof data, index: Key | null | undefined) => {
+              return (
+                <div className={styles.card} key={index}>
+                  <Image
+                    src={character.image}
+                    alt={character.name}
+                    width={180}
+                    height={180}
+                  />
+                  <h3>{character.name}</h3>
+                  <p>Status: {character.status}</p>
+                  {character.type ? (
+                    <p>Type: {character.type}</p>
+                  ) : (
+                    <p>Type: No Type</p>
+                  )}
+                  <p>Species: {character.species}</p>
+                  <p>Gender: {character.gender}</p>
+                </div>
+              );
+            }
+          )}
         </div>
         <StyledButton
           onClick={async () => {
