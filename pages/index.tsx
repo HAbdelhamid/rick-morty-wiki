@@ -1,56 +1,22 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
+import Cards from "../components/cards";
+import Search from "../components/search";
 import styles from "../styles/Home.module.css";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import styled from "styled-components";
-import { Key, useState } from "react";
+import CHARACTERS_QUERY from "../gql/queries/characters";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const CHARACTERS_QUERY = gql`
-  query getCharacters($page: Int, $name: String) {
-    characters(page: $page, filter: { name: $name }) {
-      info {
-        pages
-        next
-        prev
-      }
-      results {
-        name
-        status
-        species
-        type
-        gender
-        image
-      }
-    }
-  }
-`;
+// const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({}) {
-  const [search, setSearch] = useState("");
-  const { loading, data, fetchMore, error, refetch } = useQuery(
-    CHARACTERS_QUERY,
-    {
-      variables: {
-        name: search,
-      },
-    }
-  );
+  const { loading, data, fetchMore, refetch, error } =
+    useQuery(CHARACTERS_QUERY);
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-
-  const characters = data.characters.results;
-
-  // const checkType = async () => {
-  //   characters.gender ? (
-  //     <p>Type: {characters.type}</p>
-  //   ) : (
-  //     <p>No Type</p>
-  //   );
-  // }}
+  // const characters = data.characters.results;
 
   return (
     <div>
@@ -72,72 +38,54 @@ export default function Home({}) {
             priority
           />
         </div>
-        <Container>
-          <StyledInput
-            placeholder="Search"
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
-          <StyledButton
-            onClick={() => {
-              refetch({ name: search });
-            }}
-          >
-            search
-          </StyledButton>
-          <StyledButton
-            onClick={() => {
-              refetch({ name: "" });
-              setSearch("");
-            }}
-          >
-            reset
-          </StyledButton>
-        </Container>
-
-        <div className={styles.grid}>
-          {characters.map(
-            (character: typeof data, index: Key | null | undefined) => {
-              return (
-                <div className={styles.card} key={index}>
-                  <Image
-                    src={character.image}
-                    alt={character.name}
-                    width={180}
-                    height={180}
-                  />
-                  <h3>{character.name}</h3>
-                  <p>Status: {character.status}</p>
-                  {character.type ? (
-                    <p>Type: {character.type}</p>
-                  ) : (
-                    <p>Type: No Type</p>
-                  )}
-                  <p>Species: {character.species}</p>
-                  <p>Gender: {character.gender}</p>
-                </div>
-              );
-            }
-          )}
-        </div>
-        <StyledButton
-          onClick={async () => {
-            const fetch = await fetchMore({
+        <Search
+          onSearch={({ name }: any) => {
+            refetch({ name });
+          }}
+          onReset={() => {
+            refetch({ name: "" });
+          }}
+        />
+        <Cards
+          data={data}
+          loadMore={({ page }) => {
+            fetchMore({
               variables: {
-                page: data.characters.info.next,
+                page,
               },
             });
           }}
-        >
-          Load more
-        </StyledButton>
+        />
       </main>
     </div>
   );
 }
+
+const StyledButton = styled.button`
+  padding: 0.7em;
+  margin: 0.5em;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+`;
+
+// //Styled-components CSS
+// const Container = styled.div`
+//   padding: 1em;
+//   margin-bottom: 2em;
+//   justify-content: center;
+// `;
+
+// const StyledInput = styled.input`
+//   padding: 0.7em;
+//   margin: 0.5em;
+//   background: white;
+//   color: black;
+//   border: none;
+//   border-radius: 15px;
+// `;
 
 // export async function getServerSideProps() {
 //   // const { data } = await graphqlClient.query({
@@ -150,27 +98,3 @@ export default function Home({}) {
 //     },
 //   };
 // }
-
-//Styled-components CSS
-const Container = styled.div`
-  padding: 1em;
-  margin-bottom: 2em;
-  justify-content: center;
-`;
-const StyledButton = styled.button`
-  padding: 0.7em;
-  margin: 0.5em;
-  background: white;
-  color: black;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-`;
-const StyledInput = styled.input`
-  padding: 0.7em;
-  margin: 0.5em;
-  background: white;
-  color: black;
-  border: none;
-  border-radius: 15px;
-`;
