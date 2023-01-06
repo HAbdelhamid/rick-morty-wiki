@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import styled from "styled-components";
-import { Key, useState, useCallback } from "react";
-import { useRouter } from "next/router";
+import { Key } from "react";
 
 type Character = {
   id: string;
@@ -12,7 +11,6 @@ type Character = {
   status: string;
   species: string;
   gender: string;
-  // TODO: khassni nbada had property
   image: string;
 };
 type Props = {
@@ -21,7 +19,7 @@ type Props = {
   data: {
     characters: {
       info: {
-        next: string;
+        next: number;
       };
       results: Character[];
     };
@@ -57,18 +55,20 @@ function Cards({ loadMore, data }: Props) {
               <Image
                 src={character.image}
                 alt={character.name}
-                width={200}
-                height={200}
+                width={260}
+                height={260}
+                priority
               />
+
               <h3>{character.name}</h3>
-              <p>Status: {character.status}</p>
+              {/* <p>Status: {character.status}</p>
               {character.type ? (
                 <p>Type: {character.type}</p>
               ) : (
                 <p>Type: No Type</p>
               )}
               <p>Species: {character.species}</p>
-              <p>Gender: {character.gender}</p>
+              <p>Gender: {character.gender}</p> */}
             </Link>
           );
         })}

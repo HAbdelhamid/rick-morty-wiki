@@ -126,6 +126,11 @@ li {
   list-style: none
 }
 
+div > img {
+  border-radius: 16px;
+  
+}
+
 
 @media (prefers-color-scheme: dark) {
   html {
