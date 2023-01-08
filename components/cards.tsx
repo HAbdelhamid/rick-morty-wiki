@@ -55,6 +55,7 @@ function Cards({ loadMore, data }: Props) {
               <Image
                 src={character.image}
                 alt={character.name}
+                className="image_style"
                 width={260}
                 height={260}
                 priority

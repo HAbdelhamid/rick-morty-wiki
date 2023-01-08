@@ -16,7 +16,9 @@ export default function Home({}) {
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-  // const characters = data.characters.results;
+  const characters = data.characters.results;
+  console.log("characters", characters);
+  // console.log(data.characters.info.next);
 
   return (
     <div>
@@ -61,15 +63,15 @@ export default function Home({}) {
   );
 }
 
-const StyledButton = styled.button`
-  padding: 0.7em;
-  margin: 0.5em;
-  background: white;
-  color: black;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-`;
+// const StyledButton = styled.button`
+//   padding: 0.7em;
+//   margin: 0.5em;
+//   background: white;
+//   color: black;
+//   border: none;
+//   border-radius: 15px;
+//   cursor: pointer;
+// `;
 
 // //Styled-components CSS
 // const Container = styled.div`
