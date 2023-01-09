@@ -4,7 +4,7 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-    font-family: 'Courier', monospace;
+    font-family: 'Calibri', monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -96,7 +96,7 @@ body {
 nav {
   display: flex;
   justify-content: center;
-  padding:  1.2em;
+  padding:  1em;
   background: black;
 }
 
@@ -122,14 +122,6 @@ li {
   list-style: none
 }
 
-div > img {
-  border-radius: 16px;
-  
-}
-
-img {
-  border-radius: 10px;
-}
 
 
 @media (prefers-color-scheme: dark) {

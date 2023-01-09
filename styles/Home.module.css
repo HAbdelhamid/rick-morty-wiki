@@ -65,7 +65,7 @@
 
 .card {
   margin: 1rem 1.2rem;
-  padding: 1rem 1.2rem;
+  padding: 0.9rem;
   border-radius: var(--border-radius);
   transition: background 200ms, border 200ms;
   background: rgba(var(--card-rgb), 0.5);

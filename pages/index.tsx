@@ -5,10 +5,12 @@ import Cards from "../components/cards";
 import Search from "../components/search";
 import styles from "../styles/Home.module.css";
 import { useQuery } from "@apollo/client";
-import styled from "styled-components";
 import CHARACTERS_QUERY from "../gql/queries/characters";
 
 // const inter = Inter({ subsets: ["latin"] });
+type params = {
+  name: string;
+};
 
 export default function Home({}) {
   const { loading, data, fetchMore, refetch, error } =
@@ -41,7 +43,7 @@ export default function Home({}) {
           />
         </div>
         <Search
-          onSearch={({ name }: any) => {
+          onSearch={({ name }: params) => {
             refetch({ name });
           }}
           onReset={() => {

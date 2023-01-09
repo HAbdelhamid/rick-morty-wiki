@@ -3,6 +3,13 @@ import { useQuery } from "@apollo/client";
 import CHARACTER_QUERY from "../../gql/queries/character";
 import Image from "next/image";
 import styled from "styled-components";
+import { type } from "os";
+
+type character = {
+  name: string;
+};
+
+type;
 
 const Character = () => {
   const router = useRouter();
@@ -26,12 +33,17 @@ const Character = () => {
     episode,
     location,
   } = data.character;
-  console.log(episode);
+  console.log(data.character);
   return (
     <div>
       <Container>
         <div>
-          <Image src={image} width={350} height={350} alt="Character Picture" />
+          <StyeledImage
+            src={image}
+            width={350}
+            height={350}
+            alt="Character Picture"
+          />
           <Chip>
             <strong>{name}</strong>
           </Chip>
@@ -39,31 +51,33 @@ const Character = () => {
 
         <Box>
           <h1>ID: {id}</h1>
-          <p>
-            <strong>Status: </strong>
-            {status}
-          </p>
-          <p>
-            <strong>Gender: </strong>
-            {gender}
-          </p>
-          <p>
-            <strong>Species: </strong>
-            {species}
-          </p>
-          <p>
-            <strong>Origin: </strong>
-            {origin.name}
-          </p>
-          <p>
-            <strong>Last location:</strong> {location.name}
-          </p>
-          <p>
-            <strong>Episodes:</strong>
-            {episode.map((episode, index: key) => {
-              return <span key={index}> {episode.name}, </span>;
-            })}
-          </p>
+          <ul>
+            <li>
+              <strong>Status: </strong>
+              {status}
+            </li>
+            <li>
+              <strong>Gender: </strong>
+              {gender}
+            </li>
+            <li>
+              <strong>Species: </strong>
+              {species}
+            </li>
+            <li>
+              <strong>Origin: </strong>
+              {origin.name}
+            </li>
+            <li>
+              <strong>Last location:</strong> {location.name}
+            </li>
+            <li>
+              <strong>Episodes:</strong>
+              {episode.map((episode: character, index: any) => {
+                return <span key={index}> {episode.name}, </span>;
+              })}
+            </li>
+          </ul>
         </Box>
       </Container>
     </div>
@@ -83,6 +97,9 @@ const Box = styled.div`
   background: #575d90;
   padding: 2em;
   border-radius: 16px;
+  li {
+    list-style: inside;
+  }
 `;
 
 const Chip = styled.h1`
@@ -90,9 +107,13 @@ const Chip = styled.h1`
   margin: 0.5em auto;
   border-radius: 16px;
   text-align: center;
-  background-image: url("https://i.pinimg.com/originals/c2/b4/cf/c2b4cfa2c85a298fe6a57d13f1b6ec74.png");
+  background-image: url("/portal.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 400px 400px;
   text-shadow: 1px 1px 10px #000, 1px 1px 10px #000;
+`;
+
+const StyeledImage = styled(Image)`
+  border-radius: 16px;
 `;

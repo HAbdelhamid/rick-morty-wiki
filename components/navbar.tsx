@@ -21,7 +21,9 @@ function Navbar() {
 export default Navbar;
 
 const ListItem = styled.li`
-  li:hover {
+  padding: 0.5em;
+  :hover {
+    border-radius: 16px;
     background-color: white;
     color: black;
   }
