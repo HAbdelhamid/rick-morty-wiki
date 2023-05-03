@@ -56,7 +56,7 @@ const StyledButton = styled.button`
   background: white;
   color: black;
   border: none;
-  border-radius: 15px;
+  border-radius: 8px;
   cursor: pointer;
 `;
 const StyledInput = styled.input`
@@ -65,5 +65,6 @@ const StyledInput = styled.input`
   background: white;
   color: black;
   border: none;
-  border-radius: 15px;
+  border-radius: 8px;
+  z-index: 10;
 `;

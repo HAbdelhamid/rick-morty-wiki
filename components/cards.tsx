@@ -93,6 +93,12 @@ const Box = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(20%, auto));
   grid-gap: 45px;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, minmax(20%, auto));
+  }
+  @media (max-width: 620px) {
+    grid-template-columns: repeat(1, minmax(20%, auto));
+  }
 `;
 
 const Chip = styled.h3`
